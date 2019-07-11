@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>some movie site</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="styles.css">
+
+	</head>
+	
+	<body>
+		<div align="center"> 
+			<form id="searchForm" onsubmit="searchMovie(); return false;">
+				<input id="searchBar" type="search" name="searchBar" required="required" placeholder="search for a movie" autofocus="autofocus">
+				<input id="submitInput" type="submit" style="display:none">
+				
+				<script>
+					function searchMovie(){
+						
+						var cardClass = document.getElementsByClassName("movieCards");
+						while (cardClass.length > 0){
+							cardClass[0].parentNode.removeChild(cardClass[0]);
+						}
+						
+						var title = document.getElementById('searchBar').value;
+						var apiKey = "<<<YOUR API KEY HERE>>>";
+						
+					    var xmlHttp = new XMLHttpRequest();
+						var apiURL = "https://api.themoviedb.org/3/search/movie?include_adult=false&page=1&language=en-US&api_key="+apiKey+"&query="+title;
+		
+					    xmlHttp.open( "GET", apiURL, false ); // false for synchronous request
+					    xmlHttp.send( null );
+						
+						var jsonData = JSON.parse(xmlHttp.responseText);
+						console.log(jsonData);
+						
+						
+						var x="", i = 0;
+						
+						var htmlBody = document.getElementsByTagName("body")[0];
+							
+						
+						for (i in jsonData.results) {
+							var newCard = document.createElement("div");
+							htmlBody.appendChild(newCard);
+							newCard.className = "movieCards";
+							
+							var newTitle = document.createElement("p");
+							newCard.appendChild(newTitle);
+							newTitle.className = "movieTitle";
+						    newTitle.innerHTML = jsonData.results[i].title + " (" + jsonData.results[i].release_date.substring(0,4) + ")";
+							
+							var newRating = document.createElement("p");
+							newCard.appendChild(newRating);
+							newRating.className = "movieDetail";
+							newRating.innerHTML = "Rating: " + jsonData.results[i].vote_average + "/10 (" + jsonData.results[i].vote_count + " votes)";
+							if (jsonData.results[i].vote_average < 5){
+								newRating.setAttribute('style', 'color:#b30000 !important');
+							} else if (4 < jsonData.results[i].vote_average && jsonData.results[i].vote_average < 7){
+								newRating.setAttribute('style', 'color:#ffdb58 !important');
+							} else {
+								newRating.setAttribute('style', 'color:#009900 !important');
+							}
+							
+							var newGenre = document.createElement("p");
+							newCard.appendChild(newGenre);
+							newGenre.className = "movieDetail";
+							var h = 0, genreList = [], genre = "";
+							for (h in jsonData.results[i].genre_ids){
+								genreList.push(jsonData.results[i].genre_ids[h]);
+								if (h > 0){
+									genre += ", ";
+								}
+								switch(jsonData.results[i].genre_ids[h]) {
+									case 28:
+										genre += "Action";
+								    	break;
+									case 12:
+										genre += "Adventure";
+										break;
+									case 16:
+										genre += "Animation";
+										break;
+									case 35:
+										genre += "Comedy";
+										break;
+									case 80:
+										genre += "Crime";
+										break;
+									case 99:
+										genre += "Documentary";
+										break;
+									case 18:
+										genre += "Drama";
+										break;
+									case 10751:
+										genre += "Family";
+										break;
+									case 14:
+										genre += "Fantasy";
+										break;
+									case 36:
+										genre += "History";
+										break;
+									case 27:
+										genre += "Horror";
+										break;
+									case 10402:
+										genre += "Music";
+										break;
+									case 9648:
+										genre += "Mystery";
+										break;
+									case 10749:
+										genre += "Romance";
+										break;
+									case 878:
+										genre += "Science Fiction";
+										break;
+									case 10770:
+										genre += "TV Movie";
+										break;
+									case 53:
+										genre += "Thriller";
+										break;
+									case 10752:
+										genre += "War";
+										break;
+									case 37:
+										genre += "Western";
+										break;
+
+								}
+							}
+							
+							newGenre.innerHTML = "Genre: " + genre;
+							
+							var newDesc = document.createElement("p");
+							newCard.appendChild(newDesc);
+							newDesc.className = "movieDesc";
+							newDesc.innerHTML = jsonData.results[i].overview;
+							
+							
+						}
+						
+							
+					}
+				</script>
+			</form>
+		</div>
+		
+	</body>
+	
+</html>

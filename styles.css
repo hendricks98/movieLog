@@ -1,0 +1,40 @@
+#searchBar{
+	height:70px;
+	width:500px;
+	background-color:white;
+	text-align:center;
+	font-size:35px;
+	color:#909090;
+	box-shadow:0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+	border: 1px solid #909090;
+	border-radius: 10px;
+	margin:20px;
+
+}
+
+.movieCards {
+	margin: 0 auto;
+	padding: 1% 5%;
+	font-family:Tahoma;
+	font-size: 24px;
+	color:#909090;
+	box-shadow:0 5px 10px;
+	
+	margin:20px;
+	
+}
+
+.movieTitle {
+	font-size: 30px;
+	color: black;
+}
+
+.movieDetail{
+	font-size: 20px;
+	color: black;
+}
+
+.movieDesc {
+	font-size: 22px;
+}
+
