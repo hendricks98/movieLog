@@ -8,8 +8,8 @@
 	</head>
 	
 	<body>
-		<div align="center"> 
-			<form id="searchForm" onsubmit="searchMovie(); return false;">
+		<div align="center" id="searchContainer"> 
+			<form id="searchForm" onsubmit="searchMovie(); return false;" autocomplete="off">
 				<input id="searchBar" type="search" name="searchBar" required="required" placeholder="search for a movie" autofocus="autofocus">
 				<input id="submitInput" type="submit" style="display:none">
 				
@@ -22,7 +22,7 @@
 						}
 						
 						var title = document.getElementById('searchBar').value;
-						var apiKey = "<<<YOUR API KEY HERE>>>";
+						var apiKey = "e6a7b78c567f43dccc6b6b2e5d06a349";
 						
 					    var xmlHttp = new XMLHttpRequest();
 						var apiURL = "https://api.themoviedb.org/3/search/movie?include_adult=false&page=1&language=en-US&api_key="+apiKey+"&query="+title;
@@ -36,13 +36,30 @@
 						
 						var x="", i = 0;
 						
-						var htmlBody = document.getElementsByTagName("body")[0];
+						var htmlGrid = document.getElementById("grid");
 							
 						
 						for (i in jsonData.results) {
+							
 							var newCard = document.createElement("div");
-							htmlBody.appendChild(newCard);
+							htmlGrid.appendChild(newCard);
 							newCard.className = "movieCards";
+							
+
+							var backdrop = document.createElement("img");
+							newCard.appendChild(backdrop);
+							backdrop.className = "movieBackdrop";
+							
+							if (jsonData.results[i].backdrop_path != null){
+
+								var backdropURL = "http://image.tmdb.org/t/p/w780"+jsonData.results[i].backdrop_path;
+								backdrop.src = backdropURL;
+							} else {
+								console.log("null image");
+								var backdropURL = "images/noPreview.png"
+								backdrop.src = backdropURL;
+							}	
+
 							
 							var newTitle = document.createElement("p");
 							newCard.appendChild(newTitle);
@@ -137,8 +154,7 @@
 							var newDesc = document.createElement("p");
 							newCard.appendChild(newDesc);
 							newDesc.className = "movieDesc";
-							newDesc.innerHTML = jsonData.results[i].overview;
-							
+							newDesc.innerHTML = jsonData.results[i].overview;							
 							
 						}
 						
@@ -146,6 +162,9 @@
 					}
 				</script>
 			</form>
+		</div>
+		
+		<div id="grid"> 
 		</div>
 		
 	</body>

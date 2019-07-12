@@ -1,3 +1,4 @@
+
 #searchBar{
 	height:70px;
 	width:500px;
@@ -6,35 +7,78 @@
 	font-size:35px;
 	color:#909090;
 	box-shadow:0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-	border: 1px solid #909090;
 	border-radius: 10px;
 	margin:20px;
+	position:relative;
+}
 
+#grid {
+	margin: 0 auto;
+	display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(780px, 1fr));
+	padding: 10px;
+	grid-row-gap: 40px;
+	justify-items: center;
 }
 
 .movieCards {
-	margin: 0 auto;
-	padding: 1% 5%;
 	font-family:Tahoma;
 	font-size: 24px;
 	color:#909090;
-	box-shadow:0 5px 10px;
-	
-	margin:20px;
-	
+	box-shadow:0 0px 15px gray;
+	width:780px;
+	height:439px;
+}
+
+#nullImage {
+	position: absolute;
+}
+
+.movieCards:hover {
+	overflow:scroll;
+}
+
+.movieCards > p{
+	padding: 10px;
+}
+
+.movieCards:hover .movieTitle, .movieCards:hover .movieDetail, .movieCards:hover .movieDesc, .movieCards:hover .movieTitle {
+	position:static;
+  	opacity: 1;
+}
+
+.movieCards:hover .movieBackdrop {
+	position:absolute;
+    opacity: 0;
+    transition: opacity 0.3s linear;
+}
+
+.movieBackdrop {
+	position:static;
+	opacity:1;
+	width:780px;
+	height:439px;
 }
 
 .movieTitle {
 	font-size: 30px;
 	color: black;
+    position:absolute;
+    opacity: 0;
+    transition: opacity 0s linear;
 }
 
 .movieDetail{
 	font-size: 20px;
 	color: black;
+	position:absolute;
+    opacity: 0;
+    transition: opacity 0s linear;
 }
 
 .movieDesc {
 	font-size: 22px;
+	position:absolute;
+    opacity: 0;
+    transition: opacity 0s linear;
 }
-
